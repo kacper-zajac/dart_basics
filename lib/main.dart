@@ -15,21 +15,47 @@ class _MyAppState extends State<MyApp> {
   final _questions = const [
     {
       'questionText': 'What\'s your favourite color?',
-      'answers': ['Black', 'Red', 'Green', 'White', 'Yellow', 'Other'],
+      'answers': [
+        {'text': 'Black', 'score': 6},
+        {'text': 'Red', 'score': 5},
+        {'text': 'Greem', 'score': 1},
+        {'text': 'White', 'score': 0},
+        {'text': 'Yellow', 'score': 2},
+      ],
     },
     {
       'questionText': 'What\'s your favourite animal?',
-      'answers': ['Cat', 'Dog', 'Hamster', 'Turtle'],
+      'answers': [
+        {'text': 'Cat', 'score': 1},
+        {'text': 'Dog', 'score': 0},
+        {'text': 'Hamster', 'score': 2},
+        {'text': 'Turtle', 'score': 3},
+      ],
     },
     {
       'questionText': 'What\'s your favourite wild animal?',
-      'answers': ['Tiger', 'Elephant', 'Lion', 'Giraffe'],
+      'answers': [
+        {'text': 'Tiger', 'score': 1},
+        {'text': 'Elephant', 'score': 0},
+        {'text': 'Lion', 'score': 1},
+        {'text': 'Giraffe', 'score': 0},
+        {'text': 'Hyena', 'score': 4},
+      ],
     },
   ];
 
-  var _questionIndex = 0;
+  void _resetQuiz() {
+    setState(() {
+      _questionIndex = 0;
+      _totalScore = 0;
+    });
+  }
 
-  void _answerQuestion() {
+  var _questionIndex = 0;
+  var _totalScore = 0;
+
+  void _answerQuestion(int score) {
+    _totalScore += score;
     setState(() {
       if (_questionIndex < _questions.length) {
         _questionIndex++;
@@ -53,7 +79,7 @@ class _MyAppState extends State<MyApp> {
                 questions: _questions,
                 questionIndex: _questionIndex,
               )
-            : Result()
+            : Result(_totalScore, _resetQuiz),
       ),
     );
   }
